@@ -50,7 +50,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'repo':
             bot.sendMessage({
                 to: channelID,
-                message: "find me and improve me at " + repo
+                message: `find me and improve me at ${repo}`
             });
             break;
          }
