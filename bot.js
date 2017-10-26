@@ -1,6 +1,7 @@
 var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
+var repo = 'https://github.com/Mubuntu/bimi-bot';
 // Configure logger settings
 logger.remove(logger.transports.Console);
 logger.add(logger.transports.Console, {
@@ -18,7 +19,7 @@ bot.on('ready', function (evt) {
     logger.info(bot.username + ' - (' + bot.id + ')');
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
-    // Our bot needs to know if it will execute a command
+    // bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
@@ -44,6 +45,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             bot.sendMessage({
                 to: channelID,
                 message: "NANI?!"
+            });
+            break;
+            case 'repo':
+            bot.sendMessage({
+                to: channelID,
+                message: "find me and improve me at " + repo
             });
             break;
          }
