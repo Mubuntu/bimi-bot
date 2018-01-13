@@ -1,11 +1,28 @@
 {
-  "name": "greeter-bot",
+  "name": "bimi-bot",
   "version": "1.0.0",
-  "description": "My own Discord bot",
+  "description": "bimi bot renewed",
   "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mubuntu/bimi-bot.git"
+  },
+  "keywords": [
+    "bimi",
+    "bot",
+    "discord"
+  ],
   "author": "mubuntu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mubuntu/bimi-bot/issues"
+  },
+  "homepage": "https://github.com/Mubuntu/bimi-bot#readme",
   "dependencies": {
-    "discord.io": "^2.5.3",
-    "winston": "^2.4.0"
+    "async": "^2.6.0",
+    "discord.js": "^11.2.1"
   }
 }
