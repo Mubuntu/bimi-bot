@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Mubuntu/bimi-bot#readme",
   "dependencies": {
     "async": "^2.6.0",
+    "asyncawait": "^1.0.6",
     "discord.js": "^11.2.1"
   }
 }
