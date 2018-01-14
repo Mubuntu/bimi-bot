@@ -13,6 +13,8 @@ const bot = new Discord.Client({
 
 // collection that holds up all the commands that will be picked up out of the files
 bot.commands = new Discord.Collection();
+bot.mutes = require('./mutes.json');
+
 fs.readdir('./cmds', (err, files) => {
     if (err) console.log(err);
     // verwijder .js extension van elk bestand
@@ -42,6 +44,30 @@ bot.on("ready", async(() => {
     } catch (e) {
         console.log(e.stack);
     }
+
+    // controleer elke x aantal seconden of de mutee zijn expiration date al gepasseerd is
+    bot.setInterval(() => {
+        for (let i in bot.mutes) {
+            let time = bot.mutes[i].time;
+            let guildId = bot.mutes[i].guild;
+            let guild = bot.guilds.get(guildId);
+            let member = guild.members.get(i);
+
+            let mutedRole = guild.roles.find(r => r.name === 'Bimi Bot muted');
+            if (!mutedRole) continue;
+
+            if (Date.now() > time) {
+                console.log(`${i} kan nu uit zijn hoek worden gehaald!`);
+                member.removeRole(mutedRole);
+                delete bot.mutes[i];
+                fs.writeFile('./mutes.json', JSON.stringify(bot.mutes), (err) => {
+                    if(err) throw err;
+                    console.log(`I have umuted ${member.user.tag}`);
+                });
+            }
+        }
+
+    }, 5000);
 }));
 
 bot.on("message", async(message => {

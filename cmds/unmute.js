@@ -1,5 +1,6 @@
 var async = require('asyncawait/async');
 var await = require('asyncawait/await');
+const fs = require('fs'); 
 
 module.exports.run = async((bot, message, args) => {
     if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('U hebt niet de juiste rol voor deze actie.');
@@ -13,6 +14,12 @@ module.exports.run = async((bot, message, args) => {
     // return message.reply(toMute.username || toMute.user.username);
 
     await (toMute.removeRole(role));
+    console.log(`${toMute} kan nu uit zijn hoek worden gehaald!`);
+    delete bot.mutes[toMute];
+    fs.writeFile('./mutes.json', JSON.stringify(bot.mutes), (err) => {
+        if(err) throw err;
+        console.log(`I have umuted ${toMute.user.tag}`);
+    });
     message.channel.send(`${toMute} is momenteel ungemuted!`);
 });
 

@@ -1,5 +1,6 @@
 var async = require('asyncawait/async');
 var await = require('asyncawait/await');
+const fs = require('fs');
 
 module.exports.run = async((bot, message, args) => {
     if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('U hebt niet de juiste rol voor deze actie.');
@@ -17,7 +18,7 @@ module.exports.run = async((bot, message, args) => {
         try {
             role = await (message.guild.createRole({
                 name: "Bimi Bot muted",
-                color: "#03249",
+                color: "#03212",
                 permissions: []
             }));
             message.guild.channels.forEach(async((channel, id) => {
@@ -35,6 +36,17 @@ module.exports.run = async((bot, message, args) => {
     if (toMute.roles.has(role.id)) return message.channel.send(`${toMute} is al gemuted!`);
     // return message.reply(toMute.username || toMute.user.username);
 
+    console.log(` uitput: ${args[2]}   andere ` + args[1]);
+    bot.mutes[toMute.id] = {
+        guild: message.guild.id,
+        time: Date.now() + parseInt(args[1]) * 60 * 1000 // mute for ten seconds
+    };
+    //schrijf de mutee naar de lijst
+    fs.writeFile('./mutes.json', JSON.stringify(bot.mutes, null, 4), err => {
+        if (err) throw err;
+        if (parseInt(args[1]))
+            message.channel.send(`${toMute } is nu muted tot ${new Date(bot.mutes[toMute.id].time).toLocaleString()}`);
+    });
     await (toMute.addRole(role));
     message.channel.send(`${toMute} is momenteel gemuted!`);
 });
