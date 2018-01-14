@@ -12,6 +12,7 @@ module.exports.run = async((bot, message, args) => {
 
     }));
 
+    msg.delete();
 });
 
 module.exports.help = {
