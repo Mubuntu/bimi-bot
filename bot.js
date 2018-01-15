@@ -35,6 +35,7 @@ fs.readdir('./cmds', (err, files) => {
 
 bot.on("ready", async(() => {
     console.log(`bot is ready ${bot.user.username}`);
+    bot.user.setGame('Anthem');
     try {
         let link = await (bot.generateInvite(["ADMINISTRATOR"]));
         console.log(link);
@@ -56,6 +57,8 @@ bot.on("ready", async(() => {
             let mutedRole = guild.roles.find(r => r.name === 'Bimi Bot muted');
             if (!mutedRole) continue;
 
+
+            // check in de lijst of de muted unmuted mag worden
             if (Date.now() > time) {
                 console.log(`${i} kan nu uit zijn hoek worden gehaald!`);
                 member.removeRole(mutedRole);
